@@ -89,7 +89,7 @@ function mainRun() {
                 if (enabled["domain"]) {
                     if ($("h1.css-164r41r").length) {
                         var address = $("h1.css-164r41r").text();
-                        
+
                         updateInfoBox(address, ".css-fpm9y");
                     }
                 }
@@ -119,7 +119,7 @@ function mainRun() {
                         var address = $("h1.m-0.mb-1.mb-md-3.xlText.bold600").html();
                         address = address.replace(/(<([^>]+)>)/ig," ");
                         address = address.trim();
-        
+
                         updateInfoBox(address, ".PropertyInfo__propertyInfo--1ywRK");
                     }
                 }
@@ -236,7 +236,7 @@ function mainRun() {
 function updateInfoBox(address, location) {
     var id = Math.random().toString(36).substr(2, 10);
     var loadingImage = chrome.runtime.getURL("images/loading.svg");
-    $(location).append(`<div class="nbn-stats" id="nbn-stats-` + id + `"><div style="display:flex;align-items:center"><p>NBN information loading</p><img style="width:70px;margin-left:auto;" src="${loadingImage}"/></div></div>`);
+    $(location).append(`<div class="nbn-stats" id="nbn-stats-` + id + `"><div style="display:flex;align-items:center"><p>Gas information loading</p><img style="width:70px;margin-left:auto;" src="${loadingImage}"/></div></div>`);
 
     getData(address, function(data) {
         if ($("#nbn-stats-" + id).length) {
@@ -244,17 +244,29 @@ function updateInfoBox(address, location) {
         } else {
             $(location).append(`<div class="nbn-stats" id="nbn-stats-` + id + `></div>`);
         }
-        
-        $("#nbn-stats-" + id).addClass(data.technologyClass);
-        if (data.hasOwnProperty("failure")) {
-            $("#nbn-stats-" + id).append(data.failure);
+
+        if (data.OfferExclGST === null && data.ExceptionCode === "ConnectionUnavailable") {
+            $("#nbn-stats-" + id).append(`<p>Connecting gas to your property is unfortunately not viable</p>`);
+            $("#nbn-stats-" + id).css('border-color', '#F2C94C');
+            $("#nbn-stats-" + id).css('background-color', '#FFF2C9');
+            $("#nbn-stats-" + id).css('text-align', 'center');
+        } else if (data.ExceptionCode === "AddressNotFound") {
+            $("#nbn-stats-" + id).append(`<p>Unfortunately we have been unable to locate your property in our system</p>`);
+            $("#nbn-stats-" + id).css('border-color', '#F2994A');
+            $("#nbn-stats-" + id).css('background-color', '#FFE3CB');
+            $("#nbn-stats-" + id).css('text-align', 'center');
+        } else if (data.ExceptionCode === null) {
+            $("#nbn-stats-" + id).append(`<p>Jemena estimates the Customer Contribution required to connect to Natural Gas would be: $${data.OfferExclGST}</p>`);
+            $("#nbn-stats-" + id).css('border-color', '#219653');
+            $("#nbn-stats-" + id).css('background-color', '#EDFFEF');
+            $("#nbn-stats-" + id).css('text-align', 'center');
         } else {
-            for (var property of Object.keys(data)) {
-                if (!hiddenProperties.includes(property)) {
-                    $("#nbn-stats-" + id).append(data[property]);
-                }
-            }
+            $("#nbn-stats-" + id).append(`<p>Unknown Error :${data.ExceptionCode}</p>`);
+            $("#nbn-stats-" + id).css('border-color', '#EB5757');
+            $("#nbn-stats-" + id).css('background-color', '#E6D8D8');
+            $("#nbn-stats-" + id).css('text-align', 'center');
         }
+
     });
 }
 
@@ -270,7 +282,7 @@ function updateInfoLine(address, location) {
         }
 
         if (!data.hasOwnProperty("failure")) {
-            $("#nbn-stats-" + id).append(`${data.rawProvider} ${data.rawTechnology} (${data.rawSpeed })`);
+            $("#nbn-stats-" + id).append(`${data.rawProvider})`);
         }
     });
 }

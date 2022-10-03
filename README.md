@@ -1,6 +1,8 @@
-# NBN Availability Check Chrome Extension
+# Gas Availability Check Chrome Extension
 
-This simple extension can automatically load NBN availability information for properties on realestate.com.au & domain.com.au including technology type, maximum line speed, and co-existance status if available.
+Fork of https://github.com/LukePrior/nbn-availability-extension
+
+This simple extension can automatically load Gas availability information for properties on realestate.com.au & domain.com.au including technology type, maximum line speed, and co-existance status if available.
 
 ## Supported Sites
 
@@ -17,10 +19,7 @@ This simple extension can automatically load NBN availability information for pr
 
 ## Supported Networks
 
-- NBN
-- OptiComm
-- LBNCo
-- OPENetworks
+- Jemena
 
 # Install Instructions
 
@@ -98,16 +97,7 @@ https://microsoftedge.microsoft.com/addons/detail/nbn-availability-check/bcoemip
 
 6. Navigate to the folder you unzipped and select the chrome folder at nbn-availability-extension/chrome
 
-# NBN Availability API
+# Gas Availability API
 
-This extension uses the NBN Service Check [API](https://github.com/LukePrior/nbn-service-check) which is hosted on Vercel.
+This extension uses the Gas Service Check [API](https://github.com/SoRadGaming/jemena_gas_network_api) which is hosted on Render.
 
-[![Powered by Vercel](https://raw.githubusercontent.com/LukePrior/nbn-availability-extension/main/powered-by-vercel.svg)](https://vercel.com/)
-
-# As Featured On
-
-<p float="left" style="margin-left: 5em;">
-  <a href="https://www.gizmodo.com.au/2022/02/nbn-browser-extension/"><img src="https://i.kinja-img.com/gawker-media/image/upload/ek6rmm21v7hlavuelxnq.jpg" alt="Gizmodo" width="192" height="108"></a>
-  &emsp;
-  <a href="https://thenewdaily.com.au/finance/property/2022/02/09/real-estate-nbn-browser-extension/"><img src="https://thenewdaily.com.au/wp-content/uploads/2016/07/TND-facebook2-960x600.png" alt="The New Daily" width="192" height="108"></a>
-</p>
